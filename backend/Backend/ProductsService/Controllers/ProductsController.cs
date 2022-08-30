@@ -54,9 +54,9 @@ namespace ProductsService.Controllers
                 var addedProduct = _productService.AddProduct(product);
                 return Ok(addedProduct);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return base.Conflict(e.Message);
+                return base.Conflict($"Product name [{product.Name}] is already taken!");
             }
         }
     }

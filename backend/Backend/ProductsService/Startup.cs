@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ProductsService.DbInfrastructure;
 using ProductsService.Mapping;
+using ProductsService.Services;
+using ProductsService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,8 @@ namespace ProductsService
 {
     public class Startup
     {
+        private readonly string _cors = "cors";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,13 +44,27 @@ namespace ProductsService
             // Database
             services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductServiceDatabase")));
 
-            // Registracija AutoMappera u kontejneru, zivotni vek singleton
+            // Registration of AutoMapper inside container, life cycle - singleton
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+
+            // My services
+            services.AddScoped<IProductService, ProductService>();
+
+            // Allow CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _cors, builder => {
+                    builder.WithOrigins("http://localhost:4200")//Ovde navodimo koje sve aplikacije smeju kontaktirati nasu,u ovom slucaju nas Angular front
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +78,7 @@ namespace ProductsService
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(_cors);
 
             app.UseRouting();
 

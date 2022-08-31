@@ -1,0 +1,45 @@
+{
+  // Rutiranje mikroservisa
+  "Routes": [
+    // PRODUCTS
+    // Pregled svih product-a (LOGGED)
+    {
+      "DownstreamPathTemplate": "/api/Products",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44349
+        }
+      ],
+      "UpstreamPathTemplate": "/Products",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    // Dodavanje novog product-a (ADMIN)
+    {
+      "DownstreamPathTemplate": "/api/Products",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44349
+        }
+      ],
+      "UpstreamPathTemplate": "/Products",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    // Pregled odredjenog product-a (LOGGED)
+    {
+      "DownstreamPathTemplate": "/api/Products/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44349
+        }
+      ],
+      "UpstreamPathTemplate": "/Products/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ]
+}

@@ -40,6 +40,34 @@
       ],
       "UpstreamPathTemplate": "/Products/{id}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+
+    // USERS
+    // Login
+    {
+      "DownstreamPathTemplate": "/api/Users/Login",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/Login",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    // Register
+    {
+      "DownstreamPathTemplate": "/api/Users/Register",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/Register",
+      "UpstreamHttpMethod": [ "POST" ]
     }
   ]
 }

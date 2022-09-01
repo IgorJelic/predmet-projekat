@@ -9,12 +9,12 @@ namespace ProductsService.Dto
     public class ProductDto
     {
         public long Id { get; set; }
-        //[Required]
+        [Required]
         public string Name { get; set; }
-        //[Required]
-        //[Range(0, double.MaxValue)]
+        [Required]
+        [Range(0, double.MaxValue)]
         public double Price { get; set; }
-        //[Required]
+        [Required]
         public string Ingredients { get; set; }
     }
 }

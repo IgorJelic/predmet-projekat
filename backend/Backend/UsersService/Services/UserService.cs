@@ -1,12 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using UsersService.DbInfrastructure;
 using UsersService.Dto;
+using UsersService.Models;
 using UsersService.Services.Interfaces;
 
 namespace UsersService.Services
@@ -27,12 +32,86 @@ namespace UsersService.Services
         // LOGIN / REGISTER
         public string Login(UserLoginDto loginInfo)
         {
-            throw new NotImplementedException();
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == u.Email);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (BCrypt.Net.BCrypt.Verify(loginInfo.Password, user.Password))
+            {
+                List<Claim> userClaims = new List<Claim>();
+
+                // DODAJ LOGGED claim
+                // DODAJ ID
+                // DODAJ AKTIVIRAN, mozda samo ako je deliverer? ili svakako?
+                
+                if (user.Role == "administrator")
+                {
+                    userClaims.Add(new Claim(ClaimTypes.Role, "administrator"));
+                }
+                if (user.Role == "customer")
+                {
+                    userClaims.Add(new Claim(ClaimTypes.Role, "customer"));
+                }
+                if (user.Role == "deliverer")
+                {
+                    userClaims.Add(new Claim(ClaimTypes.Role, "deliverer"));
+                }
+
+                //Kreiramo kredencijale za potpisivanje tokena. Token mora biti potpisan privatnim kljucem
+                //kako bi se sprecile njegove neovlascene izmene
+                SymmetricSecurityKey secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey.Value));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                var tokenOptions = new JwtSecurityToken(
+                    issuer: "https://localhost:44350/", //url servera koji je izdao token
+                    claims: userClaims, //claimovi
+                    expires: DateTime.Now.AddMinutes(20), //vazenje tokena u minutama
+                    signingCredentials: signinCredentials //kredencijali za potpis
+                );
+
+                string tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+                return tokenString;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public UserRegisterDto Register(UserRegisterDto registerInfo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                User newUser = _mapper.Map<User>(registerInfo);
+
+                newUser.Password = BCrypt.Net.BCrypt.HashPassword(registerInfo.Password);
+
+                //newUser.CustomerOrders = new List<Order>();
+                //newUser.DelivererOrders = new List<Order>();
+
+                if (newUser.Role == "deliverer")
+                {
+                    newUser.ProfileStatus = "pending";
+                    newUser.DelivererOrders = new List<Order>();
+                }
+                else
+                {
+                    newUser.ProfileStatus = "active";
+                    newUser.CustomerOrders = new List<Order>();
+                }
+
+                _dbContext.Users.Add(newUser);
+                _dbContext.SaveChanges();
+
+                return _mapper.Map<UserRegisterDto>(newUser);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         // AKTIVACIJA / ODBIJANJE DOSTAVLJACA

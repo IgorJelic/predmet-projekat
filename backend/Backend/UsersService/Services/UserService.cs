@@ -5,7 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -193,14 +195,64 @@ namespace UsersService.Services
 
 
         // IMAGE WORK
-        public string UpdateProfilePhoto(long userId, IFormFile newImage)
-        {
-            throw new NotImplementedException();
-        }
-
         public string UploadImage(IFormFile image)
         {
-            throw new NotImplementedException();
+            if (image != null)
+            {
+                if (image.Length > 0)
+                {
+                    var folderName = Path.Combine("Resources", "Images");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                    var fileName = ContentDispositionHeaderValue.Parse(image.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        image.CopyTo(stream);
+                    }
+
+                    return fileName;
+                }
+            }
+
+            return "";
+        }
+        
+        public string UpdateProfilePhoto(long userId, IFormFile newImage)
+        {
+            var user = _dbContext.Users.Find(userId);
+
+            if (user == null)
+            {
+                return "";
+            }
+            else
+            {
+                if (newImage != null)
+                {
+                    if (newImage.Length > 0)
+                    {
+                        var folderName = Path.Combine("Resources", "Images");
+                        var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                        var fileName = ContentDispositionHeaderValue.Parse(newImage.ContentDisposition).FileName.Trim('"');
+                        var fullPath = Path.Combine(pathToSave, fileName);
+
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            newImage.CopyTo(stream);
+                        }
+
+                        user.ImagePath = fileName;
+                        _dbContext.SaveChanges();
+
+                        return fileName;
+                    }
+                }
+
+                return "";
+            }
         }
     }
 }

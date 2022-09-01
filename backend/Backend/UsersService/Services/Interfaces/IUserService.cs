@@ -14,6 +14,7 @@ namespace UsersService.Services.Interfaces
         UserRegisterDto GetUser(long userId);
         UserRegisterDto UpdateUser(long userId, UserRegisterDto updateInfo);
         UserRegisterDto ActivateUser(long userId);
+        UserRegisterDto RejectUser(long userId);
         List<DelivererInfoDto> GetDeliverers();
         string UploadImage(IFormFile image);
         string UpdateProfilePhoto(long userId, IFormFile newImage);

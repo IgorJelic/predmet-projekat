@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,11 +16,15 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UsersService.DbInfrastructure;
+using UsersService.Mapping;
+using UsersService.Services;
+using UsersService.Services.Interfaces;
 
 namespace UsersService
 {
     public class Startup
     {
+        private readonly string _cors = "cors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,6 +44,32 @@ namespace UsersService
 
             // Database
             services.AddDbContext<UserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserServiceDatabase")));
+
+            // Registration of AutoMapper inside container, life cycle - singleton
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            // My services
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICustomerOrderService, CustomerOrderService>();
+            services.AddScoped<IDelivererOrderService, DelivererOrderService>();
+
+
+            // Allow CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _cors, builder => {
+                    builder.WithOrigins("http://localhost:4200")//Ovde navodimo koje sve aplikacije smeju kontaktirati nasu,u ovom slucaju nas Angular front
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

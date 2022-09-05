@@ -13,7 +13,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Products",
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamHttpMethod": [ "GET" ]
       //"AuthenticationOptions": {
       //  "AuthenticationProviderKey": "AuthKey",
       //  "AllowedScopes": []
@@ -75,6 +75,124 @@
       ],
       "UpstreamPathTemplate": "/Users/Register",
       "UpstreamHttpMethod": [ "POST" ]
-    }
+    },
+    // User Info
+    {
+      "DownstreamPathTemplate": "/api/Users/User",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/User",
+      "UpstreamHttpMethod": [ "GET" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "logged": "true"
+      //}
+    },
+    // Edit Profile
+    {
+      "DownstreamPathTemplate": "/api/Users/EditProfile",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/EditProfile",
+      "UpstreamHttpMethod": [ "PUT" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "logged": "true"
+      //}
+    },
+    // My Deliverers
+    {
+      "DownstreamPathTemplate": "/api/Users/MyDeliverers",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/MyDeliverers",
+      "UpstreamHttpMethod": [ "GET" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "role": "administrator"
+      //}
+    },
+    // ActivateProfile
+    {
+      "DownstreamPathTemplate": "/api/Users/ActivateProfile/{delivererId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/ActivateProfile/{delivererId}",
+      "UpstreamHttpMethod": [ "GET" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "role": "administrator"
+      //}
+    },
+    // BlockProfile
+    {
+      "DownstreamPathTemplate": "/api/Users/BlockProfile/{delivererId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/BlockProfile/{delivererId}",
+      "UpstreamHttpMethod": [ "GET" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "role": "administrator"
+      //}
+    },
+    // Upload Image
+    {
+      "DownstreamPathTemplate": "/api/Users/UploadImage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/UploadImage",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+
+
+    // ORDERS
+
+
   ]
 }

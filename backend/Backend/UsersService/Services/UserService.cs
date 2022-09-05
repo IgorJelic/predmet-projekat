@@ -186,13 +186,20 @@ namespace UsersService.Services
             }
             else
             {
-                user.FirstName = updateInfo.FirstName;
-                user.LastName = updateInfo.LastName;
-                user.Email = updateInfo.Email;
-                user.DateOfBirth = updateInfo.DateOfBirth;
+                try
+                {
+                    user.FirstName = updateInfo.FirstName;
+                    user.LastName = updateInfo.LastName;
+                    user.Email = updateInfo.Email;
+                    user.DateOfBirth = updateInfo.DateOfBirth;
 
-                _dbContext.SaveChanges();
-                return _mapper.Map<UserRegisterDto>(user);
+                    _dbContext.SaveChanges();
+                    return _mapper.Map<UserRegisterDto>(user);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
 

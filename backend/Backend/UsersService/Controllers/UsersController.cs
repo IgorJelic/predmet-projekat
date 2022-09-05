@@ -116,13 +116,20 @@ namespace UsersService.Controllers
                 return BadRequest();
             }
 
-            var updatedUser = _userService.UpdateUser(userId, updateInfo);
-            if (updatedUser == null)
+            try
             {
-                return NotFound();
-            }
+                var updatedUser = _userService.UpdateUser(userId, updateInfo);
+                if (updatedUser == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(updatedUser);
+                return Ok(updatedUser);
+            }
+            catch (Exception)
+            {
+                return base.Conflict($"Product name [{updateInfo.Email}] is already taken!");
+            }            
         }
 
 

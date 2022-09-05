@@ -80,7 +80,7 @@ namespace UsersService.Controllers
             {
                 IEnumerable<Claim> claims = identity.Claims;
                 // or
-                userId = long.Parse(identity.FindFirst("ClaimName").Value);
+                userId = long.Parse(identity.FindFirst("id").Value);
             }
             else
             {
@@ -109,7 +109,7 @@ namespace UsersService.Controllers
             {
                 IEnumerable<Claim> claims = identity.Claims;
                 // or
-                userId = long.Parse(identity.FindFirst("ClaimName").Value);
+                userId = long.Parse(identity.FindFirst("id").Value);
             }
             else
             {
@@ -193,7 +193,7 @@ namespace UsersService.Controllers
             {
                 IEnumerable<Claim> claims = identity.Claims;
                 // or
-                userId = long.Parse(identity.FindFirst("ClaimName").Value);
+                userId = long.Parse(identity.FindFirst("id").Value);
 
                 var path = _userService.UpdateProfilePhoto(userId, file);
                 if (path == "")

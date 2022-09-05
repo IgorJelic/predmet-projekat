@@ -48,18 +48,23 @@ namespace UsersService.Services
                 // DODAJ LOGGED claim
                 // DODAJ ID
                 // DODAJ AKTIVIRAN, mozda samo ako je deliverer? ili svakako?
-                
+                userClaims.Add(new Claim("id", user.Id.ToString()));
+                userClaims.Add(new Claim("status", user.ProfileStatus));
+
                 if (user.Role == "administrator")
                 {
                     userClaims.Add(new Claim(ClaimTypes.Role, "administrator"));
+                    userClaims.Add(new Claim("role", "administrator"));
                 }
                 if (user.Role == "customer")
                 {
                     userClaims.Add(new Claim(ClaimTypes.Role, "customer"));
+                    userClaims.Add(new Claim("role", "customer"));
                 }
                 if (user.Role == "deliverer")
                 {
                     userClaims.Add(new Claim(ClaimTypes.Role, "deliverer"));
+                    userClaims.Add(new Claim("role", "deliverer"));
                 }
 
                 //Kreiramo kredencijale za potpisivanje tokena. Token mora biti potpisan privatnim kljucem

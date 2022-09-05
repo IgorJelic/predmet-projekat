@@ -9,11 +9,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using UsersService.DbInfrastructure;
 using UsersService.Mapping;
@@ -58,7 +60,6 @@ namespace UsersService
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICustomerOrderService, CustomerOrderService>();
             services.AddScoped<IDelivererOrderService, DelivererOrderService>();
-
 
             // Allow CORS
             services.AddCors(options =>

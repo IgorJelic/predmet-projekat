@@ -45,11 +45,10 @@ namespace UsersService.Services
             {
                 List<Claim> userClaims = new List<Claim>();
 
-                // DODAJ LOGGED claim
-                // DODAJ ID
-                // DODAJ AKTIVIRAN, mozda samo ako je deliverer? ili svakako?
                 userClaims.Add(new Claim("id", user.Id.ToString()));
                 userClaims.Add(new Claim("status", user.ProfileStatus));
+                // logged?
+                userClaims.Add(new Claim("logged", "true"));
 
                 if (user.Role == "administrator")
                 {

@@ -13,7 +13,14 @@
         }
       ],
       "UpstreamPathTemplate": "/Products",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "logged": "true"
+      //}
     },
     // Dodavanje novog product-a (ADMIN)
     {

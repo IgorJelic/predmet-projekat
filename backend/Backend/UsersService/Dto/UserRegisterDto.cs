@@ -19,7 +19,7 @@ namespace UsersService.Dto
         public string Password { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        [Required]
+        //[Required]
         public string ImagePath { get; set; }
         [Required]
         public string Role { get; set; }

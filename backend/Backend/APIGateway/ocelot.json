@@ -13,14 +13,14 @@
         }
       ],
       "UpstreamPathTemplate": "/Products",
-      "UpstreamHttpMethod": [ "GET" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "AuthKey",
-      //  "AllowedScopes": []
-      //},
-      //"RouteClaimsRequirement": {
-      //  "logged": "true"
-      //}
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "logged": "true"
+      }
     },
     // Dodavanje novog product-a (ADMIN)
     {
@@ -34,6 +34,13 @@
       ],
       "UpstreamPathTemplate": "/Products",
       "UpstreamHttpMethod": [ "POST" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "role": "administrator"
+      //}
     },
     // Pregled odredjenog product-a (LOGGED)
     {
@@ -46,7 +53,14 @@
         }
       ],
       "UpstreamPathTemplate": "/Products/{id}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "logged": "true"
+      }
     },
 
     // USERS

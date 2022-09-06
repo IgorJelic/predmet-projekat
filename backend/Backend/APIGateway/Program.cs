@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace APIGateway
 {
@@ -20,6 +21,10 @@ namespace APIGateway
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
                 config.AddJsonFile("ocelot.json");
+            })
+            .ConfigureLogging(logging => {
+                logging.ClearProviders();
+                logging.AddConsole();
             });
     }
 }

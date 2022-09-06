@@ -59,11 +59,13 @@ namespace UsersService.Services
                 {
                     userClaims.Add(new Claim(ClaimTypes.Role, "customer"));
                     userClaims.Add(new Claim("role", "customer"));
+                    userClaims.Add(new Claim("orders", "true"));
                 }
                 if (user.Role == "deliverer")
                 {
                     userClaims.Add(new Claim(ClaimTypes.Role, "deliverer"));
                     userClaims.Add(new Claim("role", "deliverer"));
+                    userClaims.Add(new Claim("orders", "true"));
                 }
 
                 //Kreiramo kredencijale za potpisivanje tokena. Token mora biti potpisan privatnim kljucem

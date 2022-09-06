@@ -33,14 +33,14 @@
         }
       ],
       "UpstreamPathTemplate": "/Products",
-      "UpstreamHttpMethod": [ "POST" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "AuthKey",
-      //  "AllowedScopes": []
-      //},
-      //"RouteClaimsRequirement": {
-      //  "role": "administrator"
-      //}
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "administrator"
+      }
     },
     // Pregled odredjenog product-a (LOGGED)
     {
@@ -90,7 +90,7 @@
       "UpstreamPathTemplate": "/Users/Register",
       "UpstreamHttpMethod": [ "POST" ]
     },
-    // User Info
+    // User Info (LOGGED)
     {
       "DownstreamPathTemplate": "/api/Users/User",
       "DownstreamScheme": "https",
@@ -101,16 +101,16 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/User",
-      "UpstreamHttpMethod": [ "GET" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "AuthKey",
-      //  "AllowedScopes": []
-      //},
-      //"RouteClaimsRequirement": {
-      //  "logged": "true"
-      //}
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "logged": "true"
+      }
     },
-    // Edit Profile
+    // Edit Profile (LOGGED)
     {
       "DownstreamPathTemplate": "/api/Users/EditProfile",
       "DownstreamScheme": "https",
@@ -121,16 +121,16 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/EditProfile",
-      "UpstreamHttpMethod": [ "PUT" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "AuthKey",
-      //  "AllowedScopes": []
-      //},
-      //"RouteClaimsRequirement": {
-      //  "logged": "true"
-      //}
+      "UpstreamHttpMethod": [ "PUT" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "logged": "true"
+      }
     },
-    // My Deliverers
+    // My Deliverers (ADMIN)
     {
       "DownstreamPathTemplate": "/api/Users/MyDeliverers",
       "DownstreamScheme": "https",
@@ -141,16 +141,16 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/MyDeliverers",
-      "UpstreamHttpMethod": [ "GET" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "AuthKey",
-      //  "AllowedScopes": []
-      //},
-      //"RouteClaimsRequirement": {
-      //  "role": "administrator"
-      //}
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "administrator"
+      }
     },
-    // ActivateProfile
+    // ActivateProfile (ADMIN)
     {
       "DownstreamPathTemplate": "/api/Users/ActivateProfile/{delivererId}",
       "DownstreamScheme": "https",
@@ -161,16 +161,16 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/ActivateProfile/{delivererId}",
-      "UpstreamHttpMethod": [ "GET" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "AuthKey",
-      //  "AllowedScopes": []
-      //},
-      //"RouteClaimsRequirement": {
-      //  "role": "administrator"
-      //}
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "administrator"
+      }
     },
-    // BlockProfile
+    // BlockProfile (ADMIN)
     {
       "DownstreamPathTemplate": "/api/Users/BlockProfile/{delivererId}",
       "DownstreamScheme": "https",
@@ -181,14 +181,14 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/BlockProfile/{delivererId}",
-      "UpstreamHttpMethod": [ "GET" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "AuthKey",
-      //  "AllowedScopes": []
-      //},
-      //"RouteClaimsRequirement": {
-      //  "role": "administrator"
-      //}
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "administrator"
+      }
     },
     // Upload Image
     {
@@ -206,7 +206,125 @@
 
 
     // ORDERS
-
-
+    // All Orders (ADMIN)
+    {
+      "DownstreamPathTemplate": "/api/Orders",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "administrator"
+      }
+    },
+    // My Orders (CUSTOMER, DELIVERER = ORDERS)
+    {
+      "DownstreamPathTemplate": "/api/Orders/MyOrders",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders/MyOrders",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "orders": "true"
+      }
+    },
+    // Make Order (CUSTOMER)
+    {
+      "DownstreamPathTemplate": "/api/Orders/MyOrders",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders/MyOrders",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "customer"
+      }
+    },
+    // Current Order (CUSTOMER, DELIVERER = ORDERS)
+    {
+      "DownstreamPathTemplate": "/api/Orders/CurrentOrder",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders/CurrentOrder",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "orders": "true"
+      }
+    },
+    // Available Orders (DELIVERER)
+    {
+      "DownstreamPathTemplate": "/api/Orders/Available",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders/Available",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "deliverer"
+      }
+    },
+    // Take order (DELIVERER)
+    {
+      "DownstreamPathTemplate": "/api/Orders/TakeOrder/{orderId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders/TakeOrder/{orderId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "role": "deliverer"
+      }
+    }
   ]
 }

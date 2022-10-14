@@ -1,6 +1,8 @@
 {
   // Rutiranje mikroservisa
   "Routes": [
+
+
     // PRODUCTS
     // Pregled svih product-a (LOGGED)
     {
@@ -39,7 +41,7 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "administrator"
+        "userrole": "administrator"
       }
     },
     // Pregled odredjenog product-a (LOGGED)
@@ -62,6 +64,7 @@
         "logged": "true"
       }
     },
+
 
     // USERS
     // Login
@@ -147,7 +150,7 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "administrator"
+        "userrole": "administrator"
       }
     },
     // ActivateProfile (ADMIN)
@@ -167,7 +170,7 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "administrator"
+        "userrole": "administrator"
       }
     },
     // BlockProfile (ADMIN)
@@ -187,7 +190,7 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "administrator"
+        "userrole": "administrator"
       }
     },
     // Upload Image
@@ -223,7 +226,7 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "administrator"
+        "userrole": "administrator"
       }
     },
     // My Orders (CUSTOMER, DELIVERER = ORDERS)
@@ -263,7 +266,7 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "customer"
+        "userrole": "customer"
       }
     },
     // Current Order (CUSTOMER, DELIVERER = ORDERS)
@@ -303,7 +306,7 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "deliverer"
+        "userrole": "deliverer"
       }
     },
     // Take order (DELIVERER)
@@ -323,8 +326,31 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "role": "deliverer"
+        "userrole": "deliverer"
       }
+    },
+
+
+    // URADI RUTU ZA SERVER SLIKE
+    // Take order (LOGGED)
+    {
+      "DownstreamPathTemplate": "/images",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44350
+        }
+      ],
+      "UpstreamPathTemplate": "/images",
+      "UpstreamHttpMethod": [ "GET" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "AuthKey",
+      //  "AllowedScopes": []
+      //},
+      //"RouteClaimsRequirement": {
+      //  "logged": "true"
+      //}
     }
   ]
 }

@@ -1,0 +1,23 @@
+.login-header-img {
+  text-align: center;
+}
+
+.custom-btn {
+  text-align: center;
+}
+
+.btn-wrapper {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.img-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid lightgreen;
+  border-radius: 8px;
+  padding: 16px 0;
+}

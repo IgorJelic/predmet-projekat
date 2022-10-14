@@ -1,0 +1,60 @@
+<div class="content">
+  <div class="left">
+    <div *ngFor="let product of products">
+      <ul class="proizvod-card" (click)="addProduct(product)">
+        <li class="list-item">
+          <strong class="naziv">{{ product.name }}</strong>
+        </li>
+        <hr />
+        <li class="list-item">
+          <strong>Cena : </strong>{{ product.price }} din
+        </li>
+        <li class="list-item sastojci">
+          <strong>Sastojci : </strong>{{ product.ingredients }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="right">
+    <div class="porudzbina">
+      <div *ngIf="orderedProducts.length > 0">
+        <div *ngFor="let product of orderedProducts">
+          <p class="proizvod-mini" (click)="removeProduct(product)">
+            <strong>Proizvod: </strong
+            >{{ getProductById(product.productId).name }} x{{ product.amount }}
+          </p>
+        </div>
+      </div>
+      <h3 *ngIf="orderedProducts.length == 0">
+        <i>Porudzbina prazna</i>
+      </h3>
+      <hr width="160px" />
+      <h3 style="margin: 0; padding: 0">Dostava: + 200din</h3>
+      <h3><strong>Ukupno: </strong>{{ order.price }} din</h3>
+      <hr width="160px" />
+
+      <input
+        type="text"
+        [formControl]="orderAddress"
+        [class.is-invalid]="
+          (this.orderAddress.touched || this.orderAddress.dirty) &&
+          this.orderAddress.invalid
+        "
+        placeholder="Adresa Dostave"
+        style="margin-bottom: 10px"
+      />
+      <input
+        type="text"
+        [formControl]="note"
+        [class.is-invalid]="
+          (this.note.touched || this.note.dirty) && this.note.invalid
+        "
+        placeholder="Komentar"
+      />
+
+      <hr width="160px" />
+
+      <button type="button" (click)="makeOrder()">Kreiraj</button>
+    </div>
+  </div>
+</div>

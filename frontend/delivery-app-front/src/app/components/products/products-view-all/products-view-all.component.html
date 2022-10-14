@@ -1,0 +1,15 @@
+<div class="list-wrapper">
+  <div *ngFor="let product of products">
+    <ul class="product-card">
+      <li class="list-item">
+        <strong class="naziv">{{ product.name }}</strong>
+      </li>
+      <hr />
+      <li class="list-item"><strong>Cena : </strong>{{ product.price }} din</li>
+      <li class="list-item sastojci">
+        <strong>Sastojci : </strong>{{ product.ingredients }}
+      </li>
+    </ul>
+  </div>
+  <a routerLink="../new-product" class="btn">&#43;</a>
+</div>

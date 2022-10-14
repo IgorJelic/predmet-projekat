@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmailService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -22,19 +23,21 @@ namespace UsersService.Services
     {
         private readonly IMapper _mapper;
         private readonly UserDbContext _dbContext;
+        private readonly IEmailSender _emailSender;
         private readonly IConfigurationSection _secretKey;
 
-        public UserService(IConfiguration configuration, IMapper mapper, UserDbContext dbContext)
+        public UserService(IConfiguration configuration, IMapper mapper, UserDbContext dbContext, IEmailSender emailSender)
         {
             _mapper = mapper;
             _dbContext = dbContext;
+            _emailSender = emailSender;
             _secretKey = configuration.GetSection("SecretKey");
         }
 
         // LOGIN / REGISTER
         public string Login(UserLoginDto loginInfo)
         {
-            User user = _dbContext.Users.FirstOrDefault(u => u.Email == u.Email);
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == loginInfo.Email);
 
             if (user == null)
             {
@@ -47,24 +50,29 @@ namespace UsersService.Services
 
                 userClaims.Add(new Claim("id", user.Id.ToString()));
                 userClaims.Add(new Claim("status", user.ProfileStatus));
+                userClaims.Add(new Claim("name", $"{user.FirstName} {user.LastName}"));
+                userClaims.Add(new Claim("img", user.ImagePath));
                 // logged?
                 userClaims.Add(new Claim("logged", "true"));
 
                 if (user.Role == "administrator")
                 {
-                    userClaims.Add(new Claim(ClaimTypes.Role, "administrator"));
+                    //userClaims.Add(new Claim(ClaimTypes.Role, "administrator"));
                     userClaims.Add(new Claim("role", "administrator"));
+                    userClaims.Add(new Claim("userrole", "administrator"));
                 }
                 if (user.Role == "customer")
                 {
-                    userClaims.Add(new Claim(ClaimTypes.Role, "customer"));
+                    //userClaims.Add(new Claim(ClaimTypes.Role, "customer"));
                     userClaims.Add(new Claim("role", "customer"));
+                    userClaims.Add(new Claim("userrole", "customer"));
                     userClaims.Add(new Claim("orders", "true"));
                 }
                 if (user.Role == "deliverer")
                 {
-                    userClaims.Add(new Claim(ClaimTypes.Role, "deliverer"));
+                    //userClaims.Add(new Claim(ClaimTypes.Role, "deliverer"));
                     userClaims.Add(new Claim("role", "deliverer"));
+                    userClaims.Add(new Claim("userrole", "deliverer"));
                     userClaims.Add(new Claim("orders", "true"));
                 }
 
@@ -136,6 +144,9 @@ namespace UsersService.Services
             _dbContext.SaveChanges();
 
             // Email service
+            var emailAddress = user.Email;
+            var message = new Message(new string[] { $"{emailAddress}" }, "Aktivacija profila", "Dobrodosli, Vas profil je AKTIVIRAN! DostavaApp by Igor Jelic");
+            _emailSender.SendEmail(message);
 
             return _mapper.Map<UserRegisterDto>(user);
         }
@@ -153,6 +164,9 @@ namespace UsersService.Services
             _dbContext.SaveChanges();
 
             // Email service
+            var emailAddress = user.Email;
+            var message = new Message(new string[] { $"{emailAddress}" }, "Aktivacija profila", "Nazalost, Vas profil je ODBIJEN! DostavaApp by Igor Jelic");
+            _emailSender.SendEmail(message);
 
             return _mapper.Map<UserRegisterDto>(user);
         }

@@ -1,0 +1,42 @@
+.order-wrapper {
+  display: flex;
+  gap: 0 30px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.order {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 22px;
+  background-color: rgb(213, 221, 228);
+  padding-top: 40px;
+
+  position: relative;
+}
+
+.confirm-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: greenyellow;
+  border-radius: 5px;
+
+  transition: 0.1s ease-in;
+}
+
+.confirm-btn:hover {
+  cursor: pointer;
+  background-color: rgb(200, 250, 124);
+}
+
+.order,
+.order ul {
+  list-style: none;
+}
+
+.order ul {
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: aliceblue;
+}

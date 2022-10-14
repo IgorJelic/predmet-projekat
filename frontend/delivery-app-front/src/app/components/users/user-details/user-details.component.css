@@ -1,0 +1,87 @@
+.user-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 60px;
+  padding-right: 100px;
+}
+
+.name {
+  font-size: 1.9rem;
+}
+
+.email {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.date-of-birth {
+  margin-top: 0px;
+}
+
+.status {
+  margin: 0;
+}
+
+.status.active {
+  color: green;
+}
+
+.status.pending {
+  color: orange;
+}
+
+.status.blocked {
+  color: orangered;
+}
+
+.edit-profile {
+  position: absolute;
+  right: 40px;
+  top: 160px;
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  background-color: #00ffa6;
+}
+
+.edit-profile.deliverer {
+  top: 200px;
+}
+
+.edit-profile:visited {
+  color: black;
+}
+
+.edit-profile:hover {
+  background-color: #e5fff6;
+}
+
+.role {
+  color: rgb(50, 50, 50);
+  font-size: 1.4rem;
+}
+
+.text {
+  margin-top: 80px;
+  padding: 40px;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.6);
+  width: fit-content;
+
+  background-color: #caf5e6;
+  position: relative;
+}
+
+img {
+  position: absolute;
+  right: 100px;
+  top: 40px;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+}

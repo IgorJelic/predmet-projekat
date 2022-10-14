@@ -1,0 +1,160 @@
+<form [formGroup]="registrationForm">
+  <div class="form-group">
+    <label for="email">Email: </label>
+    <input
+      id="email"
+      class="form-control"
+      formControlName="email"
+      [class.is-invalid]="
+        (this.registrationForm.controls.email.touched ||
+          this.registrationForm.controls.email.dirty) &&
+        this.registrationForm.controls.email.invalid
+      "
+    />
+  </div>
+  <div
+    *ngIf="
+      registrationForm.controls['email'].invalid &&
+      (registrationForm.controls['email'].dirty ||
+        registrationForm.controls['email'].touched)
+    "
+  >
+    <div
+      class="warning-msg"
+      *ngIf="registrationForm.controls['email'].errors?.['pattern']"
+    >
+      Email format not valid.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Password: </label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      formControlName="password"
+      [class.is-invalid]="
+        (this.registrationForm.controls.password.touched ||
+          this.registrationForm.controls.password.dirty) &&
+        this.registrationForm.controls.password.invalid
+      "
+    />
+  </div>
+
+  <div
+    *ngIf="
+      registrationForm.controls['password'].invalid &&
+      (registrationForm.controls['password'].dirty ||
+        registrationForm.controls['password'].touched)
+    "
+  >
+    <div
+      class="warning-msg"
+      *ngIf="registrationForm.controls['password'].errors?.['minlength']"
+    >
+      Password must be at least 8 characters long.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmPassword">Confirm Password: </label>
+    <input
+      type="password"
+      id="confirmPassword"
+      class="form-control"
+      formControlName="confirmPassword"
+      (ngModelChange)="confirmPasswordInvalid()"
+      [class.is-invalid]="
+        (this.registrationForm.controls.confirmPassword.touched ||
+          this.registrationForm.controls.confirmPassword.dirty) &&
+        (this.registrationForm.controls.confirmPassword.invalid ||
+          confirmPasswordInvalid())
+      "
+    />
+  </div>
+
+  <div
+    *ngIf="
+      (confirmPasswordInvalid() ||
+        registrationForm.controls['confirmPassword'].invalid) &&
+      (registrationForm.controls['confirmPassword'].dirty ||
+        registrationForm.controls['confirmPassword'].touched)
+    "
+  >
+    <div class="warning-msg" *ngIf="confirmPasswordInvalid()">
+      Confirm password must be equal to Password.
+    </div>
+  </div>
+
+  <hr />
+  <div class="form-group">
+    <label for="firstName">First Name: </label>
+    <input
+      id="firstName"
+      class="form-control"
+      formControlName="firstName"
+      [class.is-invalid]="
+        (this.registrationForm.controls.firstName.touched ||
+          this.registrationForm.controls.firstName.dirty) &&
+        this.registrationForm.controls.firstName.invalid
+      "
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">Last Name: </label>
+    <input
+      id="lastName"
+      class="form-control"
+      formControlName="lastName"
+      [class.is-invalid]="
+        (this.registrationForm.controls.lastName.touched ||
+          this.registrationForm.controls.lastName.dirty) &&
+        this.registrationForm.controls.lastName.invalid
+      "
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="dateOfBirth">Datum Rodjenja: </label>
+    <input
+      type="date"
+      id="dateOfBirth"
+      class="form-control"
+      formControlName="dateOfBirth"
+      (ngModelChange)="dateOfBirthInvalid()"
+      [class.is-invalid]="
+        (this.registrationForm.controls.dateOfBirth.touched ||
+          this.registrationForm.controls.dateOfBirth.dirty) &&
+        (this.registrationForm.controls.dateOfBirth.invalid ||
+          dateOfBirthInvalid())
+      "
+    />
+  </div>
+
+  <label for="files" class="profile-picture-btn">Profilna slika</label>
+  <input
+    type="file"
+    id="files"
+    #file
+    style="display: none"
+    (change)="uploadFile(file.files)"
+  />
+  <hr />
+
+  <select class="tip-korisnika" formControlName="role">
+    <option value="">Tip Korisnika</option>
+    <option value="customer">Customer</option>
+    <option value="deliverer">Deliverer</option>
+  </select>
+
+  <hr />
+
+  <div class="form-row">
+    <div class="form-group btn-wrapper">
+      <button type="button" class="custom-btn" (click)="onSubmit()">
+        Register
+      </button>
+    </div>
+  </div>
+</form>

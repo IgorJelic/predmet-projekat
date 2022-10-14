@@ -1,0 +1,35 @@
+.order-wrapper {
+  display: flex;
+  gap: 0 30px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.order-class {
+  border-radius: 8px;
+  padding: 16px;
+  background-color: rgb(213, 221, 228);
+}
+
+.order-class,
+.order-class ul {
+  list-style: none;
+}
+
+.order-class ul {
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: aliceblue;
+}
+
+.order-class.delivered {
+  border: 5px solid green;
+}
+
+.order-class.confirmed {
+  border: 5px solid yellow;
+}
+
+.order-class.waiting {
+  border: 5px solid red;
+}

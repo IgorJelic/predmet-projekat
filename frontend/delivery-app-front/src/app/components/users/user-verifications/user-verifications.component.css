@@ -1,0 +1,52 @@
+.list-card {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-item {
+  width: fit-content;
+}
+
+.card {
+  width: fit-content;
+  min-width: 220px;
+  padding: 40px;
+  list-style: none;
+  background-color: rgb(192, 226, 255);
+  border-radius: 16px;
+}
+
+.active {
+  border: 3px solid green;
+}
+
+.pending {
+  border: 3px solid orange;
+}
+
+.blocked {
+  border: 3px solid orangered;
+}
+
+.activate-btn {
+  background-color: black;
+  color: aliceblue;
+  border-radius: 4px;
+}
+
+.activate-btn:hover {
+  cursor: pointer;
+}
+
+img.rounded {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  margin-right: 16px;
+  border: 1px solid grey;
+}

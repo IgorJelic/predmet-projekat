@@ -1,0 +1,60 @@
+<a routerLink="../all-products" class="btn">&#60;</a>
+
+<div style="display: flex; justify-content: center; align-items: center">
+  <div class="form-wrapper">
+    <form [formGroup]="productForm" autocomplete="off">
+      <h2>Novi proizvod</h2>
+      <hr />
+      <div class="form-group product">
+        <label for="name">Naziv: </label>
+        <input
+          id="name"
+          class="form-control"
+          formControlName="name"
+          [class.is-invalid]="
+            (this.productForm.controls.name.touched ||
+              this.productForm.controls.name.dirty) &&
+            this.productForm.controls.name.invalid
+          "
+        />
+      </div>
+      <div class="form-group product">
+        <label for="price">Cena: </label>
+        <input
+          type="number"
+          id="price"
+          class="form-control"
+          formControlName="price"
+          [class.is-invalid]="
+            (this.productForm.controls.price.touched ||
+              this.productForm.controls.price.dirty) &&
+            this.productForm.controls.price.invalid
+          "
+        />
+      </div>
+      <div class="form-group product area">
+        <label for="ingredients">Sastojci: </label>
+        <textarea
+          id="ingredients"
+          class="form-control"
+          formControlName="ingredients"
+          [class.is-invalid]="
+            (this.productForm.controls.ingredients.touched ||
+              this.productForm.controls.ingredients.dirty) &&
+            this.productForm.controls.ingredients.invalid
+          "
+          cols="18"
+          rows="5"
+        ></textarea>
+      </div>
+      <hr />
+      <div class="form-row">
+        <div class="form-group btn-wrapper">
+          <button type="button" class="custom-btn" (click)="onSubmit()">
+            Dodaj
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

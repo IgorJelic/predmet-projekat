@@ -1,0 +1,99 @@
+<form [formGroup]="editProfileForm">
+  <div class="form-group">
+    <label for="email">Email: </label>
+    <input
+      id="email"
+      class="form-control"
+      formControlName="email"
+      [class.is-invalid]="
+        (this.editProfileForm.controls.email.touched ||
+          this.editProfileForm.controls.email.dirty) &&
+        this.editProfileForm.controls.email.invalid
+      "
+      [ngModel]="user.email"
+    />
+  </div>
+
+  <div
+    *ngIf="
+      editProfileForm.controls['email'].invalid &&
+      (editProfileForm.controls['email'].dirty ||
+        editProfileForm.controls['email'].touched)
+    "
+  >
+    <div
+      class="warning-msg"
+      *ngIf="editProfileForm.controls['email'].errors?.['pattern']"
+    >
+      Email format not valid.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="firstName">First Name: </label>
+    <input
+      id="firstName"
+      class="form-control"
+      formControlName="firstName"
+      [class.is-invalid]="
+        (this.editProfileForm.controls.firstName.touched ||
+          this.editProfileForm.controls.firstName.dirty) &&
+        this.editProfileForm.controls.firstName.invalid
+      "
+      [ngModel]="user.firstName"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">Last Name: </label>
+    <input
+      id="lastName"
+      class="form-control"
+      formControlName="lastName"
+      [class.is-invalid]="
+        (this.editProfileForm.controls.lastName.touched ||
+          this.editProfileForm.controls.lastName.dirty) &&
+        this.editProfileForm.controls.lastName.invalid
+      "
+      [ngModel]="user.lastName"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="dateOfBirth">Datum Rodjenja: </label>
+    <input
+      type="date"
+      id="dateOfBirth"
+      class="form-control"
+      formControlName="dateOfBirth"
+      (ngModelChange)="dateOfBirthInvalid(dateOfBirthValue.value)"
+      #dateOfBirthValue
+      [class.is-invalid]="
+        (this.editProfileForm.controls.dateOfBirth.touched ||
+          this.editProfileForm.controls.dateOfBirth.dirty) &&
+        (this.editProfileForm.controls.dateOfBirth.invalid ||
+          dateOfBirthInvalid(dateOfBirthValue.value))
+      "
+      [ngModel]="user.dateOfBirth | date: 'yyyy-MM-dd'"
+    />
+  </div>
+
+  <label for="files" class="image-upload">Profilna slika</label>
+  <input
+    type="file"
+    id="files"
+    #file
+    style="display: none"
+    (change)="uploadFile(file.files)"
+  />
+
+  <hr />
+
+  <div class="form-row">
+    <div class="form-group btn-wrapper">
+      <button type="button" class="custom-btn" (click)="onSubmit()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</form>

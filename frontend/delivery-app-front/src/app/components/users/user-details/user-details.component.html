@@ -1,0 +1,43 @@
+<div class="user-info">
+  <div class="text">
+    <h1 class="name">
+      <strong>{{ this.user.firstName }} {{ this.user.lastName }}</strong>
+      <span class="role"
+        ><code> -{{ this.user.role }}</code></span
+      >
+    </h1>
+    <h3
+      class="status active"
+      *ngIf="isDeliverer() && userActivated == 'active'"
+    >
+      <code>active</code>
+    </h3>
+    <h3
+      class="status pending"
+      *ngIf="isDeliverer() && userActivated == 'pending'"
+    >
+      <code>pending</code>
+    </h3>
+    <h3
+      class="status blocked"
+      *ngIf="isDeliverer() && userActivated == 'blocked'"
+    >
+      <code>blocked</code>
+    </h3>
+    <hr />
+    <p class="email"><strong>Email: </strong> {{ this.user.email }}</p>
+    <p class="date-of-birth">
+      <strong>Datum rodjenja: </strong
+      >{{ this.user.dateOfBirth | date: "dd.MM.yyyy." }}
+    </p>
+    <a
+      class="edit-profile"
+      routerLink="../edit-profile"
+      [ngClass]="isDeliverer() ? 'deliverer' : ''"
+      >Izmeni Profil</a
+    >
+  </div>
+
+  <!-- <p>Slika path = {{ serverImgPath + user.profilnaSlikaPath }}</p> -->
+  <img style="display: block" [src]="serverImgPath + userImgPath" width="300" />
+</div>

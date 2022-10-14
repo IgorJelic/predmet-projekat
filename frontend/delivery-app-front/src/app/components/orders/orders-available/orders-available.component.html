@@ -1,0 +1,31 @@
+<div class="order-wrapper">
+  <div *ngIf="availableOrders.length == 0">
+    <h4>
+      <strong>Trenutno nema neprihvacenih porudzbina! Pokusaj kasnije!</strong>
+    </h4>
+  </div>
+  <div *ngFor="let order of availableOrders">
+    <ul class="order">
+      <button class="confirm-btn" (click)="takeOrder(order.id)">Preuzmi</button>
+      <hr />
+      <li><strong>ID porudzbine: </strong>{{ order.id }}</li>
+      <li><strong>Adresa: </strong>{{ order.orderAddress }}</li>
+      <li><strong>Cena: </strong>{{ order.price }} din</li>
+      <li><strong>Komentar: </strong>{{ order.note }}</li>
+      <hr />
+      <div>
+        <strong>Proizvodi: </strong>
+        <div *ngFor="let orderedProduct of order.orderedProducts">
+          <ul>
+            <li>
+              <strong
+                >Naziv: {{ getProductById(orderedProduct.productId).name }}
+              </strong>
+            </li>
+            <li><strong>Kolicina: </strong>{{ orderedProduct.amount }} kom</li>
+          </ul>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>

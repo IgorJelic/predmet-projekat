@@ -1,0 +1,97 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+input {
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+input.is-invalid {
+  border: 2px solid orangered;
+}
+
+.left {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 840px;
+  /* width: 840px; */
+  /* border: 2px solid green; */
+}
+
+.right {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 540px;
+  min-width: 340px;
+  /* border: 2px solid green; */
+}
+
+strong.naziv {
+  font-size: 1.2rem;
+  color: rgb(209, 136, 0);
+}
+
+.proizvod-card {
+  width: fit-content;
+  min-width: 180px;
+  padding: 26px;
+  list-style: none;
+  background-color: rgb(192, 226, 255);
+  border-radius: 16px;
+
+  font-size: 16px;
+
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  box-shadow: 2px 4px rgba(0, 0, 0, 0.6);
+
+  transition: 0.2s ease-out;
+}
+
+.proizvod-card.added {
+  background-color: rgb(88, 241, 88);
+  pointer-events: none;
+}
+
+.proizvod-card:not(.added):hover {
+  background-color: rgb(219, 237, 252);
+  cursor: pointer;
+  transform: scale(1.01);
+}
+
+.sastojci {
+  word-wrap: normal;
+  max-width: 200px;
+}
+
+.proizvod-mini {
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid black;
+  background-color: rgba(163, 240, 128, 0.75);
+}
+
+.proizvod-mini:hover {
+  background-color: rgba(240, 128, 128, 0.75);
+  cursor: pointer;
+}
+
+.porudzbina {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: rgb(255, 234, 165);
+  /* background-color: rgb(219, 237, 252); */
+}

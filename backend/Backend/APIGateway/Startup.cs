@@ -18,6 +18,8 @@ namespace APIGateway
 {
     public class Startup
     {
+        private readonly string _cors = "cors";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,6 +49,17 @@ namespace APIGateway
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))//navodimo privatni kljuc kojim su potpisani nasi tokeni
                };
            });
+
+            // Allow CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _cors, builder => {
+                    builder.WithOrigins("http://localhost:4200")//Ovde navodimo koje sve aplikacije smeju kontaktirati nasu,u ovom slucaju nas Angular front
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +69,8 @@ namespace APIGateway
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(_cors);
 
             app.UseRouting();
 

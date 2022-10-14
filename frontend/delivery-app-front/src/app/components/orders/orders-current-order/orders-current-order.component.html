@@ -1,0 +1,28 @@
+<div class="order">
+  <h1><strong>ID: </strong>{{ currentOrder.id }}</h1>
+  <h3><strong>Adresa: </strong>{{ currentOrder.orderAddress }}</h3>
+  <h3><strong>Cena: </strong>{{ currentOrder.price }} din</h3>
+  <h3><strong>Proizvodi: </strong></h3>
+  <div *ngFor="let orderedProduct of currentOrder.orderedProducts">
+    <h4>
+      <strong>Naziv: </strong
+      >{{ getProductById(orderedProduct.productId).name }}
+    </h4>
+    <h4><strong>Kolicina: </strong>{{ orderedProduct.amount }}</h4>
+  </div>
+  <div *ngIf="currentOrder.confirmed">
+    <div *ngIf="timer.minutes > -1 && timer.seconds > -1" class="timer">
+      <div class="countdown">
+        <div class="minutes">{{ timer.minutes }}</div>
+        :
+        <div class="seconds">
+          <span *ngIf="timer.seconds < 10">0</span>{{ timer.seconds }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!currentOrder.confirmed">
+    <div class="message">Porudzbina ceka svog dostavljaca! :)</div>
+  </div>
+</div>

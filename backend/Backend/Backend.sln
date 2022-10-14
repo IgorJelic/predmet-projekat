@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsService", "Products
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsersService", "UsersService\UsersService.csproj", "{DF7E21E9-3B96-49F3-B2D2-7DC353FB23A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "APIGateway\APIGateway.csproj", "{78DDA704-D53B-4DE6-AD8D-6EF5930605A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIGateway", "APIGateway\APIGateway.csproj", "{78DDA704-D53B-4DE6-AD8D-6EF5930605A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{DECE0266-E88D-4276-9354-D608CE965790}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{78DDA704-D53B-4DE6-AD8D-6EF5930605A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78DDA704-D53B-4DE6-AD8D-6EF5930605A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78DDA704-D53B-4DE6-AD8D-6EF5930605A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DECE0266-E88D-4276-9354-D608CE965790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DECE0266-E88D-4276-9354-D608CE965790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DECE0266-E88D-4276-9354-D608CE965790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DECE0266-E88D-4276-9354-D608CE965790}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

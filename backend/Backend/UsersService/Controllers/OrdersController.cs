@@ -50,7 +50,7 @@ namespace UsersService.Controllers
                 IEnumerable<Claim> claims = identity.Claims;
                 // or
                 userId = long.Parse(identity.FindFirst("id").Value);
-                userRole = identity.FindFirst("role").Value;
+                userRole = identity.FindFirst("userrole").Value;
             }
             else
             {
@@ -118,7 +118,7 @@ namespace UsersService.Controllers
                 IEnumerable<Claim> claims = identity.Claims;
                 // or
                 userId = long.Parse(identity.FindFirst("id").Value);
-                userRole = identity.FindFirst("role").Value;
+                userRole = identity.FindFirst("userrole").Value;
             }
             else
             {
@@ -127,13 +127,15 @@ namespace UsersService.Controllers
 
             if (userRole.Equals("deliverer"))
             {
-                var delivererOrders = _delivererOrderService.GetCurrentOrder(userId);
-                return Ok(delivererOrders);
+                var delivererCurrentOrder = _delivererOrderService.GetCurrentOrder(userId);
+
+                return Ok(delivererCurrentOrder);
             }
             else if (userRole.Equals("customer"))
             {
-                var customerOrders = _customerOrderService.GetCurrentOrder(userId);
-                return Ok(customerOrders);
+                var customerCurrentOrder = _customerOrderService.GetCurrentOrder(userId);
+
+                return Ok(customerCurrentOrder);
             }
             else
             {

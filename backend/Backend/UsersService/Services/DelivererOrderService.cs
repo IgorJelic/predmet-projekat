@@ -30,8 +30,13 @@ namespace UsersService.Services
                 return -1;
             }
 
+            if(deliverer.DelivererOrders == null)
+            {
+                deliverer.DelivererOrders = new List<Models.Order>();
+            }
+
             Random r = new();
-            int deliveryTime = r.Next(1, 5);
+            int deliveryTime = r.Next(5, 5);
             //int deliveryTime = r.Next(1, 1);
             //int deliveryTime = r.Next(10, 10);
 
@@ -55,32 +60,46 @@ namespace UsersService.Services
 
         public OrderInfoDto GetCurrentOrder(long delivererId)
         {
-            var user = _dbContext.Users.Find(delivererId);
+            var user = _dbContext.Users.Include("DelivererOrders.OrderedProducts").FirstOrDefault(u => u.Id == delivererId);
 
             if (user == null)
             {
                 return null;
             }
 
-            var lastOrder = user.DelivererOrders.Last();
-            if (lastOrder.DeliveryTime > DateTime.Now)
+            if (user.DelivererOrders == null)
             {
-                return _mapper.Map<OrderInfoDto>(lastOrder);
+                user.DelivererOrders = new List<Models.Order>();
             }
 
-            return null;
+            if (user.DelivererOrders.Count > 0)
+            {
+                var lastOrder = user.DelivererOrders.Last();
+                if (lastOrder.DeliveryTime > DateTime.Now)
+                {
+                    return _mapper.Map<OrderInfoDto>(lastOrder);
+                }
+            }          
+
+            return new OrderInfoDto() { Id = -1 };
         }
 
         public List<OrderInfoDto> GetMyOrders(long delivererId)
         {
-            var user = _dbContext.Users.Find(delivererId);
+            //var user = _dbContext.Users.Find(delivererId);
+            var user = _dbContext.Users.Include("DelivererOrders.OrderedProducts").FirstOrDefault(u => u.Id == delivererId);
 
             if (user == null)
             {
                 return null;
             }
 
-            var myOrders = user.DelivererOrders.Where(o => o.DeliveryTime < DateTime.Now);
+            if (user.DelivererOrders == null)
+            {
+                user.DelivererOrders = new List<Models.Order>();
+            }
+
+            var myOrders = user.DelivererOrders.Where(o => o.DeliveryTime < DateTime.Now).ToList();
 
             return _mapper.Map<List<OrderInfoDto>>(myOrders);
         }

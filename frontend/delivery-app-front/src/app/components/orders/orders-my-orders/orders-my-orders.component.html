@@ -1,0 +1,32 @@
+<div class="order-wrapper">
+  <div *ngIf="myOrders.length == 0">
+    <strong>Istorija porudzbina prazna!</strong>
+  </div>
+
+  <div *ngFor="let order of myOrders">
+    <ul class="order">
+      <li><strong>ID porudzbine: </strong>{{ order.id }}</li>
+      <li><strong>Adresa: </strong>{{ order.orderAddress }}</li>
+      <li>
+        <strong>Isporucena: </strong
+        >{{ order.deliveryTime | date: "'MMM d, y, HH:mm" }}
+      </li>
+      <li><strong>Cena: </strong>{{ order.price }} din</li>
+      <hr />
+      <div>
+        <strong>Proizvodi: </strong>
+        <div *ngFor="let orderedProduct of order.orderedProducts">
+          <ul>
+            <li>
+              <strong
+                >Naziv:
+                {{ getProductById(orderedProduct.productId).name }}</strong
+              >
+            </li>
+            <li><strong>Kolicina: </strong>{{ orderedProduct.amount }} kom</li>
+          </ul>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>

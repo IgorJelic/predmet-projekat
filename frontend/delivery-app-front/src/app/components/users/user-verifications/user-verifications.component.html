@@ -1,0 +1,42 @@
+<div class="list-card">
+  <div *ngFor="let deliverer of deliverers">
+    <ul
+      class="card"
+      [ngClass]="
+        deliverer.profileStatus == 'pending'
+          ? 'pending'
+          : deliverer.profileStatus == 'active'
+          ? 'active'
+          : 'blocked'
+      "
+    >
+      <li class="list-item img">
+        <img [src]="serverImgPath + deliverer.imagePath" class="rounded" />
+      </li>
+      <li class="list-item">
+        <strong>Ime : </strong>{{ deliverer.firstName }}
+      </li>
+      <li class="list-item">
+        <strong>Prezime : </strong>{{ deliverer.lastName }}
+      </li>
+      <li class="list-item"><strong>Email : </strong>{{ deliverer.email }}</li>
+      <hr />
+      <button
+        *ngIf="deliverer.profileStatus == 'pending'"
+        type="button"
+        (click)="activate(deliverer.id)"
+        class="activate-btn"
+      >
+        Aktiviraj
+      </button>
+      <button
+        *ngIf="deliverer.profileStatus == 'pending'"
+        type="button"
+        (click)="block(deliverer.id)"
+        class="activate-btn"
+      >
+        Blokiraj
+      </button>
+    </ul>
+  </div>
+</div>

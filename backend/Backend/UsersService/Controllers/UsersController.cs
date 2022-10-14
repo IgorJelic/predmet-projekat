@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using UsersService.Services.Interfaces;
 
 namespace UsersService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -27,6 +29,7 @@ namespace UsersService.Controllers
         // POST api/Users/Login
         [HttpPost]
         [Route("Login")]
+        [AllowAnonymous]
         public IActionResult Login(UserLoginDto userLogin)
         {
             if (!ModelState.IsValid)
@@ -41,12 +44,13 @@ namespace UsersService.Controllers
                 return StatusCode(StatusCodes.Status401Unauthorized);
             }
 
-            return Ok(token);
+            return Ok(new { token = token });
         }
 
         // POST api/Users/Register
         [HttpPost]
         [Route("Register")]
+        [AllowAnonymous]
         public IActionResult Register(UserRegisterDto userRegister)
         {
             if (!ModelState.IsValid)
@@ -70,13 +74,13 @@ namespace UsersService.Controllers
         // GET api/Users/User
         [HttpGet]
         [Route("User")]
-        //[Authorize(Roles="logged")]
+        //[Authorize(Roles = "logged")]
         public IActionResult GetUser()
         {
             long userId = -1;
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            if (identity != null && identity.Claims.Count() > 0)
             {
                 IEnumerable<Claim> claims = identity.Claims;
                 // or
@@ -99,13 +103,13 @@ namespace UsersService.Controllers
         // PUT api/Users/EditProfile
         //[Authorize(Roles="logged")]
         [HttpPut]
-        [Route("User")]
+        [Route("EditProfile")]
         public IActionResult EditProfile(UserRegisterDto updateInfo)
         {
             long userId = -1;
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            if (identity != null && identity.Claims.Count() > 0)
             {
                 IEnumerable<Claim> claims = identity.Claims;
                 // or
@@ -140,6 +144,20 @@ namespace UsersService.Controllers
         //[Authorize(Roles="administrator")]
         public IActionResult Deliverers()
         {
+            long userId = -1;
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null && identity.Claims.Count() > 0)
+            {
+                IEnumerable<Claim> claims = identity.Claims;
+                // or
+                userId = long.Parse(identity.FindFirst("id").Value);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
             return Ok(_userService.GetDeliverers());
         }
 
@@ -182,6 +200,7 @@ namespace UsersService.Controllers
         // POST api/Users/UploadImage
         [HttpPost]
         [Route("UploadImage")]
+        [AllowAnonymous]
         public IActionResult UploadImage()
         {
             var file = Request.Form.Files[0];
@@ -192,31 +211,46 @@ namespace UsersService.Controllers
             if (identity != null)
             {
                 IEnumerable<Claim> claims = identity.Claims;
-                // or
-                userId = long.Parse(identity.FindFirst("id").Value);
 
-                var path = _userService.UpdateProfilePhoto(userId, file);
-                if (path == "")
+                if (claims.Count() > 0)
                 {
-                    return StatusCode(500);
+                    userId = long.Parse(identity.FindFirst("id").Value);
+
+                    var path = _userService.UpdateProfilePhoto(userId, file);
+                    if (path == "")
+                    {
+                        return StatusCode(500);
+                    }
+
+                    //var obj = new
+                    //{
+                    //    slikaPath = path
+                    //};
+
+                    return Ok(new { slikaPath = path });
                 }
+                else
+                {
+                    var path = _userService.UploadImage(file);
+                    if (path == "")
+                    {
+                        return StatusCode(500);
+                    }
 
-                //var obj = new
-                //{
-                //    slikaPath = path
-                //};
-
-                return Ok(new { slikaPath = path });
+                    return Ok(new { imagePath = path });
+                }
             }
             else
             {
-                var path = _userService.UploadImage(file);
-                if (path == "")
-                {
-                    return StatusCode(500);
-                }
+                return StatusCode(500);
 
-                return Ok(new { slikaPath = path });
+                //var path = _userService.UploadImage(file);
+                //if (path == "")
+                //{
+                //    return StatusCode(500);
+                //}
+
+                //return Ok(new { slikaPath = path });
             }
         }
 

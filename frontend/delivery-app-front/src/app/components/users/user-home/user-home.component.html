@@ -1,0 +1,66 @@
+<div class="home-wrapper">
+  <nav>
+    <div class="profile">
+      <img
+        routerLink="profile"
+        [src]="serverImgPath + userImgPath"
+        class="rounded"
+        [ngClass]="
+          !isDeliverer()
+            ? ''
+            : userActivated == 'active'
+            ? 'active'
+            : userActivated == 'pending'
+            ? 'pending'
+            : 'blocked'
+        "
+      />
+      <a routerLink="profile">{{ userName }}</a>
+    </div>
+
+    <div class="links">
+      <a
+        *ngIf="userRole == 'deliverer'"
+        class="link"
+        routerLink="available-orders"
+        >Slobodne Porudzbine</a
+      >
+      <a *ngIf="userRole == 'deliverer'" class="link" routerLink="current-order"
+        >Trenutna Porudzbina</a
+      >
+      <a *ngIf="userRole == 'customer'" class="link" routerLink="create-order"
+        >Nova/Trenutna Porudzbina</a
+      >
+      <a
+        *ngIf="userRole == 'customer' || userRole == 'deliverer'"
+        class="link"
+        routerLink="my-orders"
+        >Moje Porudzbine</a
+      >
+      <a
+        *ngIf="userRole == 'administrator'"
+        class="link"
+        routerLink="verifications"
+      >
+        Verifikacije</a
+      >
+      <a
+        *ngIf="userRole == 'administrator'"
+        class="link"
+        routerLink="all-orders"
+        >Sve Porudzbine</a
+      >
+      <a
+        *ngIf="userRole == 'administrator'"
+        class="link"
+        routerLink="all-products"
+        >Proizvodi</a
+      >
+      <a class="link" (click)="logout()">LogOut</a>
+    </div>
+  </nav>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>
